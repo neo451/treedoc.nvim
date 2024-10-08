@@ -1,16 +1,16 @@
 vim.treesitter.language.add("html", {
-   path = vim.fn.expand "~/.local/share/nvim/lazy/nvim-treesitter/parser/html.so",
+   path = vim.fn.expand "~/.luarocks/lib/luarocks/rocks-5.1/tree-sitter-html/0.0.29-1/parser/html.so",
 })
 
 vim.treesitter.language.add("xml", {
-   path = vim.fn.expand "~/.local/share/nvim/lazy/nvim-treesitter/parser/xml.so",
+   path = vim.fn.expand "~/.luarocks/lib/luarocks/rocks-5.1/tree-sitter-xml/0.0.29-1/parser/xml.so",
 })
 
 local treedoc = require "treedoc"
 local eq = assert.are.same
 
-local sourced_file = require("plenary.debug_utils").sourced_filepath()
-local data_dir = vim.fn.fnamemodify(sourced_file, ":h") .. "/data/"
+-- local sourced_file = require("plenary.debug_utils").sourced_filepath()
+-- local data_dir = vim.fn.fnamemodify(sourced_file, ":h") .. "/data/"
 
 local function xml(src)
    return treedoc.parse(src, { language = "xml" })
@@ -60,11 +60,6 @@ describe("xml", function()
       eq(expected, xml(src)[1])
    end)
 end)
-
-local function readfile(path)
-   local str = vim.fn.readfile(data_dir .. path)
-   return table.concat(str)
-end
 
 describe("html", function()
    it("should parse simple elements", function()
