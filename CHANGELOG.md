@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/neo451/treedoc.nvim/compare/v1.0.0...v1.0.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* do not print garbage to user.. ([b638899](https://github.com/neo451/treedoc.nvim/commit/b6388990d87e79b981ab78578d9d7d3cd541c9f6))
+* fix tests, list_ts_tags ([fe4284d](https://github.com/neo451/treedoc.nvim/commit/fe4284d8ce5906fd17cf74276528e2946c5dd161))
+
 ## 1.0.0 (2024-10-08)
 
 
