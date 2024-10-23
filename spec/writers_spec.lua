@@ -1,13 +1,13 @@
 local treedoc = require "treedoc"
 local conv = require "treedoc.writers.markdown"
 
-package.path = package.path .. ";/home/n451/.local/share/nvim/lazy/plenary.nvim/lua/?.lua"
 local eq = assert.are.same
 
+vim.treesitter.language.add("html", {
+   path = vim.fn.expand "~/.luarocks/lib/luarocks/rocks-5.1/tree-sitter-html/0.0.29-1/parser/html.so",
+})
+
 local function md(str)
-   vim.treesitter.language.add("html", {
-      path = vim.fn.expand "~/.local/share/nvim/lazy/nvim-treesitter/parser/html.so",
-   })
    return conv(treedoc.parse(str, { language = "html" })[1])
 end
 
