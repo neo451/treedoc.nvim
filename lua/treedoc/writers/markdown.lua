@@ -11,9 +11,9 @@ setmetatable(md, {
    __index = function(t, k)
       if not rawget(t, k) then
          return function(node)
-            if vim.g.treedoc_debug then
-               print(vim.inspect(node))
-            end
+            -- if vim.g.treedoc_debug then
+            -- print(vim.inspect(node))
+            -- end
             return "<<" .. node.tag .. ">>"
          end
       end
@@ -41,7 +41,7 @@ end
 md.pre = md.div
 
 md.ul = function(node)
-   local buf = { "\n" }
+   local buf = { "\n\n" }
    for i, li in ipairs(node) do
       buf[i] = convert(li)
    end
@@ -50,7 +50,7 @@ md.ul = function(node)
 end
 
 md.ol = function(node)
-   local buf = { "\n" }
+   local buf = { "\n\n" }
    for i, li in ipairs(node) do
       buf[i] = convert(li, i)
    end
@@ -68,6 +68,7 @@ local function concat_node(node, sep)
    for i, child in ipairs(node) do
       buf[i] = convert(child)
    end
+   -- buf[#buf + 1] = "\n"
    return table.concat(buf, sep)
 end
 
@@ -75,7 +76,7 @@ md.li = function(node, order)
    if order then
       return ("%d. %s"):format(order, concat_node(node))
    else
-      return "- " .. convert(node[1])
+      return "- " .. concat_node(node)
    end
 end
 
@@ -91,7 +92,7 @@ md.img = function(node)
 end
 
 md.p = function(node)
-   return concat_node(node)
+   return concat_node(node) .. "\n"
 end
 
 md.html = md.p
@@ -106,7 +107,7 @@ md.hr = function(_)
 end
 
 md.code = function(node)
-   if node.class then
+   if node.class and not node.class:find "plaintext" then
       return ("\n```%s\n%s\n```\n"):format(node.class:sub(10, #node.class), concat_node(node, " "))
    end
    return ("`%s`"):format(node[1])
@@ -155,27 +156,27 @@ md.b = md.small
 -- end
 
 -- TODO: more robust rendering, handle very long lines
-md.table = function(node)
-   local buf = { "\n" }
-   local b = {}
-   local deli = { "|" }
-   for i, tr in ipairs(node) do
-      for _, t in ipairs(tr) do
-         b[#b + 1] = "| " .. (t[1] or " ")
-         if i == 1 then
-            deli[#deli + 1] = "--|"
-         end
-      end
-      b[#b + 1] = "|"
-      buf[#buf + 1] = table.concat(b)
-      if i == 1 then
-         buf[#buf + 1] = table.concat(deli)
-      end
-      b = {}
-   end
-   buf[#buf + 1] = "\n"
-   return table.concat(buf, "\n")
-end
+-- md.table = function(node)
+--    local buf = { "\n" }
+--    local b = {}
+--    local deli = { "|" }
+--    for i, tr in ipairs(node) do
+--       for _, t in ipairs(tr) do
+--          b[#b + 1] = "| " .. (t[1] or " ")
+--          if i == 1 then
+--             deli[#deli + 1] = "--|"
+--          end
+--       end
+--       b[#b + 1] = "|"
+--       buf[#buf + 1] = table.concat(b)
+--       if i == 1 then
+--          buf[#buf + 1] = table.concat(deli)
+--       end
+--       b = {}
+--    end
+--    buf[#buf + 1] = "\n"
+--    return table.concat(buf, "\n")
+-- end
 
 md.section = function(_)
    return "\n"
@@ -185,6 +186,18 @@ end
 function convert(t, ...)
    if type(t) == "string" then
       return t
+   end
+   if vim.islist(t) then
+      local res = {}
+      for i, v in ipairs(t) do
+         res[i] = convert(v)
+      end
+      return table.concat(res, "\n")
+   end
+   for i, v in ipairs(t) do
+      if type(v) == "table" and v.tag then
+         t[i] = convert(v)
+      end
    end
    return md[t.tag](t, ...)
 end
