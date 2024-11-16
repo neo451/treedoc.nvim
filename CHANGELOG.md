@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/neo451/treedoc.nvim/compare/v1.0.1...v1.0.2) (2024-11-16)
+
+
+### Bug Fixes
+
+* fix:  ([cc21a67](https://github.com/neo451/treedoc.nvim/commit/cc21a6798a9ca8e8e868b54aad395d6a58652e46))
+
 ## [1.0.1](https://github.com/neo451/treedoc.nvim/compare/v1.0.0...v1.0.1) (2024-10-23)
 
 
