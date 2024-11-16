@@ -5,9 +5,18 @@
 ---@field info? table
 ---@field content? string | string[]
 
+---@class TDInline
+---@field tag string
+---@field t string
+---@field content TDInline[]
+---@field text string
+
+local a = {}
+
 ---@enum treedoc.InlineType
 local InlineTypes = {
    Str = true,
+
    Emph = true,
    Underline = true,
    Strong = true,
@@ -15,31 +24,19 @@ local InlineTypes = {
    Superscript = true,
    Subscript = true,
    SmallCaps = true,
-   Quoted = true,
-   Cite = true,
-   Code = true,
+   Note = true,
+
    Space = true,
    SoftBreak = true,
    LineBreak = true,
+
+   Cite = true,
+   Code = true,
+
+   Quoted = true,
    Math = true,
    RawInline = true,
    Link = true,
    Image = true,
-   Note = true,
    Span = true,
 }
-
-local Treedoc = {}
-
----@param blocks any
----@param meta any
----@return table
-Treedoc.Treedoc = function(blocks, meta)
-   return { blocks = blocks, meta = meta }
-end
-
----@param str string
----@return treedoc.Inline
-Treedoc.Str = function(str)
-   return { tag = "Str", text = str }
-end
