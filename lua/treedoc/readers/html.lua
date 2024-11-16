@@ -2,7 +2,7 @@ local ut = require "treedoc.utils"
 local html = {}
 
 local treedoc = require "treedoc.contructors"
-local guesslang = require "treedoc.guesslang"
+-- local guesslang = require "treedoc.guesslang"
 
 local get_text = ut.get_text
 local noop = ut.noop
