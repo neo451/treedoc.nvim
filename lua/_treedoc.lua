@@ -6,7 +6,6 @@ local ut = require "treedoc.utils"
 M.rules = {}
 
 -- TODO: lazy load handlers
-M.rules.xml = require "treedoc.xml"
 M.rules.html = require "treedoc.readers.html"
 
 -- IDEA: none-ls tidy for tidying markup??
