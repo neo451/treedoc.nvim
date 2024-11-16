@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/neo451/treedoc.nvim/compare/v1.0.2...v1.0.3) (2024-11-16)
+
+
+### Bug Fixes
+
+* remove guesslang ([ba5c1ae](https://github.com/neo451/treedoc.nvim/commit/ba5c1ae4438096fcb34c51d0cf42047b0a0ab672))
+
 ## [1.0.2](https://github.com/neo451/treedoc.nvim/compare/v1.0.1...v1.0.2) (2024-11-16)
 
 
